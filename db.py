@@ -1,4 +1,5 @@
 import datetime
+import traceback
 
 import pymysql
 
@@ -18,7 +19,6 @@ class WriteResultsToDB:
 
         for result in results:
             try:
-
                 print(result["name"], flush=True)
                 ts = datetime.datetime.now()
 
@@ -78,7 +78,9 @@ class WriteResultsToDB:
                     connection.commit()
             except IndexError:
                 pass
+            except Exception:
+                pass
 
-        connection.close()
+            connection.close()
 
         print("Written!", flush=True)

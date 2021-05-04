@@ -9,6 +9,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.common.proxy import Proxy, ProxyType
 from selenium.common.exceptions import (
     NoSuchElementException,
     TimeoutException,
@@ -90,12 +91,30 @@ class GetProductLinks:
 
             return product_links
 
+        proxy_list = [
+            "45.145.90.145:57297",
+            "45.152.227.125:52281",
+            "45.159.85.88:55031",
+            "212.107.25.2:51480",
+            "45.145.90.135:57297",
+
+        ]
+        
+        city_proxy = random.choice(proxy_list)
+
+        proxy = Proxy()
+        proxy.proxy_type = ProxyType.MANUAL
+        proxy.http_proxy = city_proxy
+        proxy.ssl_proxy = city_proxy
+
         options = Options()
         options.add_argument(f"--user-agent={cfg.request_data['user_agent']}")
         options.headless = True
         browser = webdriver.Chrome(
             executable_path=cfg.webdriver["path"], options=options
         )
+        capabilities = webdriver.DesiredCapabilities.CHROME
+        proxy.add_to_capabilities(capabilities)
         action = ActionChains(browser)
         browser.set_window_size("1366", "768")
 
@@ -293,12 +312,33 @@ class GetProductData:
 
             return ", ".join(materials_data)
 
+        proxy_list = [
+            "45.145.90.145:62539",
+            "45.152.227.125:59783",
+            "45.159.85.88:61871",
+            "212.107.25.2:60027",
+            "45.145.90.135:62539",
+
+        ]
+        
+        city_proxy = random.choice(proxy_list)
+        print(city_proxy, flush=True)
+        proxy = Proxy()
+        proxy.proxy_type = ProxyType.MANUAL
+        proxy.http_proxy = city_proxy
+        proxy.ssl_proxy = city_proxy
+
+        capabilities = webdriver.DesiredCapabilities.CHROME
+        proxy.add_to_capabilities(capabilities)
+
         options = Options()
         options.add_argument(f"--user-agent={cfg.request_data['user_agent']}")
         options.headless = True
         browser = webdriver.Chrome(
             executable_path=cfg.webdriver["path"], options=options
         )
+
+
         browser.set_window_size("1920", "1080")
 
         url = product["product_link"]
