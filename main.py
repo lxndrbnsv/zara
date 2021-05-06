@@ -10,8 +10,8 @@ sys.stderr = open("logs.log", "w")
 
 if __name__ == "__main__":
     categories = ReadCategories().cat_dicts
-    for category in categories:
-        # GetProductLinks(category)
-        products = ReadProducts().dicts
-        for product in products:
-            WriteResultsToDB(GetProductData(product).results)
+    #for category in categories:
+        #GetProductLinks(category)
+    products = ReadProducts().dicts
+    for product in products:
+        WriteResultsToDB(GetProductData(product).results)

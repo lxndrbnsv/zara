@@ -8,6 +8,7 @@ import config as cfg
 
 class WriteResultsToDB:
     def __init__(self, results):
+
         connection = pymysql.connect(
             host=cfg.db_data["host"],
             user=cfg.db_data["user"],
@@ -16,7 +17,6 @@ class WriteResultsToDB:
             charset="utf8mb4",
             cursorclass=pymysql.cursors.DictCursor,
         )
-
         for result in results:
             try:
                 print(result["name"], flush=True)
@@ -80,7 +80,7 @@ class WriteResultsToDB:
                 pass
             except Exception:
                 pass
+        connection.close()
 
-            connection.close()
 
         print("Written!", flush=True)
